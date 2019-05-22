@@ -15,7 +15,6 @@ bitagent
 [fossa-badge]: https://app.fossa.com/api/projects/git%2Bgithub.com%2Fmjslabs%2Fbitagent.svg?type=shield
 [fossa]: https://app.fossa.com/projects/git%2Bgithub.com%2Fmjslabs%2Fbitagent?ref=badge_shield
 
-
 bitagent is a small service to help you share secrets between processes. Run
 locally, each instance of bitagent listens on a Unix socket and is able to store
 one secret. Instead of storing a session key or password in a file, store it in
