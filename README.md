@@ -82,5 +82,5 @@ top of [main.go](main.go).
 The only thing stopping someone from accessing your secret in bitagent is the
 permissions on the socket file. These default to a sane value, but there are
 no guarantees that this is the best practice for all environments. You should
-only run bitagent on trusted machines. This is a similar to how you would treat
+only run bitagent on trusted machines. This is similar to how you would treat
 your SSH private key file.
