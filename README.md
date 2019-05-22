@@ -4,6 +4,7 @@ bitagent
 [![Build Status][travis-badge]][travis]
 [![Go Report Card][goreport-badge]][goreport]
 [![Test Coverage][coverage]][codeclimate]
+[![FOSSA Status][fossa-badge]][fossa]
 
 [travis-badge]: https://travis-ci.org/mjslabs/bitagent.svg?branch=master
 [travis]: https://travis-ci.org/mjslabs/bitagent
@@ -11,6 +12,9 @@ bitagent
 [goreport]: https://goreportcard.com/report/github.com/mjslabs/bitagent
 [coverage]: https://api.codeclimate.com/v1/badges/221f0a7b9a102e962743/test_coverage
 [codeclimate]: https://codeclimate.com/github/mjslabs/bitagent/test_coverage
+[fossa-badge]: https://app.fossa.com/api/projects/git%2Bgithub.com%2Fmjslabs%2Fbitagent.svg?type=shield
+[fossa]: https://app.fossa.com/projects/git%2Bgithub.com%2Fmjslabs%2Fbitagent?ref=badge_shield
+
 
 bitagent is a small service to help you share secrets between processes. Run
 locally, each instance of bitagent listens on a Unix socket and is able to store
