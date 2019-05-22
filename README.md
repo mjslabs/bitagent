@@ -62,7 +62,7 @@ To store a secret, send a `P` command. Here's an example using netcat.
 echo "Pmysecret" | nc -U ~/.bitagent.sock -N
 ```
 
-To retreive the secret, use `G`.
+To retrieve the secret, use `G`.
 
 ```bash
 echo "G" | nc -U ~/.bitagent.sock -N
