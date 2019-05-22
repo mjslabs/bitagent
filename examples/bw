@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+
+# Proxy commands for the bitwarden CLI, intercepting them to get or set a
+# session token for seamless use between shells and other programs.
+
+# Installation of the bitwarden CLI
+bwcmd="/snap/bin/bw"
+# Default socket location
+basock="${HOME}/.bitagent.sock"
+# This assumes you've run a `go install`
+bitagent="${GOBIN}/bitagent $basock"
+
+if [[ ! -e $basock ]]; then
+  $bitagent 1>/dev/null & disown
+fi
+
+if [[ $1 == "unlock" ]]; then
+  unlockOut=$($bwcmd unlock)
+  <<< $unlockOut grep -q BW_SESSION
+  if [[ $? == "0" ]]; then
+    echo Success
+    echo "P"$(<<< $unlockOut tr -d '\n' | sed -e 's/^.*BW_SESSION="\(.*\)".*$/\1/') | nc -U $basock -N
+  else
+    echo $unlockOut
+  fi
+  exit
+else
+  export BW_SESSION="$(echo G | nc -U $basock -N)"
+  if [[ $BW_SESSION == "" ]]; then
+    # Avoids "Session key is invalid." being sent to the terminal
+    unset BW_SESSION
+  fi
+  $bwcmd $*
+ fi
