@@ -39,13 +39,19 @@ Installation & usage
 ---
 
 To install bitagent, use the standard `go install` process.
+[Go 1.11+](https://golang.org/) is required due to the use of Go modules.
 
 ```bash
 go install github.com/mjslabs/bitagent
 ```
 
-Launch bitagent using your system's preferred method of backgrounding a process,
-e.g.
+The easiest way to work with bitagent is by making a wrapper script for your
+use case. See [examples](examples), which includes such a script for use with
+the Bitwarden CLI. Below are the instructions for working with bitagent
+manually, or when creating your own wrapper script.
+
+First, launch bitagent using your system's preferred method of backgrounding a
+process, e.g.
 
 ```bash
 ${GOBIN}/bitagent & disown
@@ -67,10 +73,6 @@ To retrieve the secret, use `G`.
 echo "G" | nc -U ~/.bitagent.sock -N
 ```
 
-The easiest way to work with bitagent is by making a wrapper script for your
-use case. See [examples](examples), which includes such a script for use with
-the Bitwarden CLI.
-
 Caveats
 ---
 
@@ -80,7 +82,7 @@ out or included in core dumps. This has not been fully vetted by the authors of
 bitagent.  
 
 bitagent defaults to storing up to a 256 byte secret. This is tunable at the
-top of [main.go](main.go).  
+top of [main.go](main.go). This should be made to be dynamic.
 
 The only thing stopping someone from accessing your secret in bitagent is the
 permissions on the socket file. These default to a sane value, but there are
