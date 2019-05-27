@@ -6,13 +6,14 @@ env:
 go:
   - 1.12.x
 
-gobuild_args: -v -coverprofile c.out
-
 install:
   - GO111MODULE=off go get -v github.com/codeclimate/test-reporter
 
 before_script:
   - test-reporter before-build
+
+script:
+  - make test
 
 after_script:
   - test-reporter after-build --coverage-input-type gocov --exit-code $TRAVIS_TEST_RESULT
