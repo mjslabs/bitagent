@@ -1,4 +1,4 @@
-package main
+package server
 
 import (
 	"errors"
@@ -11,9 +11,9 @@ import (
 	"testing"
 	"time"
 
+	"github.com/awnumar/memguard"
 	"github.com/stretchr/testify/assert"
 	"google.golang.org/grpc/test/bufconn"
-	"gopkg.in/awnumar/memguard.v0"
 	"gopkg.in/phayes/permbits.v0"
 )
 
@@ -33,7 +33,7 @@ func testSimulate(t *testing.T) {
 	bufferSize = len(testString) + 1
 	defer func() { bufferSize = oldBuffer }()
 
-	go main()
+	go Server()
 	time.Sleep(1 * time.Second)
 
 	client, err := net.Dial("unix", sockDefault)
@@ -82,7 +82,7 @@ func testShortPayload(t *testing.T) {
 
 // Test socket creation
 func testSocketPermissions(t *testing.T) {
-	go main()
+	go Server()
 	time.Sleep(time.Second * 1)
 	f, err := os.Stat(sockDefault)
 	assert.NoError(t, err)
@@ -124,7 +124,7 @@ func testBadBuffer(t *testing.T) {
 	oldBuffer := bufferSize
 	bufferSize = -1
 	defer func() { bufferSize = oldBuffer }()
-	assert.PanicsWithValue(t, "memguard.ErrInvalidLength: length of buffer must be greater than zero", main)
+	assert.PanicsWithValue(t, "memguard.ErrInvalidLength: length of buffer must be greater than zero", Server)
 }
 
 // Test incorrectly specified socket path
@@ -133,5 +133,5 @@ func testBadSocketPath(t *testing.T) {
 	oldSock := sockDefault
 	defer func() { sockDefault = oldSock }()
 	sockDefault = "/blah"
-	assert.PanicsWithValue(t, "listen unix "+sockDefault+": bind: permission denied", main)
+	assert.PanicsWithValue(t, "listen unix "+sockDefault+": bind: permission denied", Server)
 }

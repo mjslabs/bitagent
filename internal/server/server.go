@@ -1,4 +1,4 @@
-package main
+package server
 
 import (
 	"bufio"
@@ -13,8 +13,8 @@ import (
 	"strings"
 	"syscall"
 
+	"github.com/awnumar/memguard"
 	"github.com/mitchellh/go-homedir"
-	"gopkg.in/awnumar/memguard.v0"
 )
 
 // Size of the secret that'll be stored for the client
@@ -41,7 +41,8 @@ func init() {
 	sockDefault = filepath.Join(home, ".bitagent.sock")
 }
 
-func main() {
+// Server -
+func Server() {
 	sockAddr := sockDefault
 	if len(os.Args) == 2 && string(os.Args[1][0]) == "/" {
 		sockAddr = os.Args[1]
@@ -117,9 +118,4 @@ func clientHandler(c net.Conn, secret *memguard.LockedBuffer) error {
 		}
 	}
 	return nil
-}
-
-func errorAndSafeExit(s string, c int) {
-	log.Println(s)
-	memguard.SafeExit(c)
 }

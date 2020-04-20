@@ -35,8 +35,6 @@ google.golang.org/genproto v0.0.0-20180817151627-c66870c02cf8 h1:Nw54tB0rB7hY/N0
 google.golang.org/genproto v0.0.0-20180817151627-c66870c02cf8/go.mod h1:JiN7NxoALGmiZfu7CAH4rXhgtRTLTxftemlI0sWmxmc=
 google.golang.org/grpc v1.20.1 h1:Hz2g2wirWK7H0qIIhGIqRGTuMwTE8HEKFnDZZ7lm9NU=
 google.golang.org/grpc v1.20.1/go.mod h1:10oTOabMzJvdu6/UiuZezV6QK5dSlG84ov/aaiqXj38=
-gopkg.in/awnumar/memguard.v0 v0.15.1 h1:n8rfek4ymarPRvq91oJ3RIozH3A9yJxUX8dbd0PQXFo=
-gopkg.in/awnumar/memguard.v0 v0.15.1/go.mod h1:JYCePzdi13b0agNuuZ5TnisRy9PJzCXhqdbCTRo2lFU=
 gopkg.in/phayes/permbits.v0 v0.0.0-20190108233746-1efae4548023 h1:SqGSC9d+DdZ2KSbRlRPSJTc6Mmx3tE2gOzrN9yTbur0=
 gopkg.in/phayes/permbits.v0 v0.0.0-20190108233746-1efae4548023/go.mod h1:SYmI9d5sKrOoOsAzVQyh+v2Jn8if3ELcMCHBfkBDJvs=
 honnef.co/go/tools v0.0.0-20190102054323-c2f93a96b099/go.mod h1:rf3lG4BRIbNafJWhAfAdb/ePZxsR/4RtNHQocxwk9r4=
