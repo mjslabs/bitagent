@@ -7,7 +7,7 @@ GO_FILES := $(shell find . -name '*.go')
 all: build
 
 build:
-	go build -v -o ${OUT} ${PKG}
+	go build -v -o ${OUT} ${PKG}/cmd/bitagent
 
 c.out:
 	go test -coverprofile=c.out -v ${PKG}/...
