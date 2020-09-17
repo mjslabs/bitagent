@@ -10,23 +10,24 @@
 # curl https://raw.githubusercontent.com/mjslabs/bitagent/master/examples/bw > $HOME/bin/bw && chmod 0755 $HOME/bin/bw
 
 # Installation of the bitwarden CLI
-bwcmd="/snap/bin/bw"
+bwcmd="${HOME}/bin/bwcli"
 # Default socket location
 basock="${HOME}/.bitagent.sock"
 # This assumes you've run a `go install`
-bitagent="${GOBIN}/bitagent $basock"
+bitagent="${GOBIN:-${HOME}/go/bin}/bitagent $basock"
 
 if [[ ! -e $basock ]]; then
   $bitagent 1>/dev/null & disown
 fi
 
-if [[ $1 == "unlock" ]]; then
-  unlockOut=$($bwcmd unlock)
+if [[ $1 == "unlock" || $1 == "login" ]]; then
+  unlockOut=$($bwcmd $1)
   <<< $unlockOut grep -q BW_SESSION
   if [[ $? == "0" ]]; then
-    echo Success
+    echo "$1 successful"
     echo "P"$(<<< $unlockOut tr -d '\n' | sed -e 's/^.*BW_SESSION="\(.*\)".*$/\1/') | nc -U $basock -N
   else
+    echo "$1 failed"
     echo $unlockOut
   fi
   exit
