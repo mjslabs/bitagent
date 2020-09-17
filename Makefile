@@ -7,15 +7,15 @@ GO_FILES := $(shell find . -name '*.go')
 all: build
 
 build:
-	go build -v -o ${OUT} ${PKG}/cmd/bitagent
+	go build -v -o ${OUT} ${PKG}
 
 c.out:
 	go test -coverprofile=c.out -v ${PKG}/...
 
 test: c.out
 
-coverhtml: c.out
-	go tool cover -html=c.out
+cover.html: c.out
+	go tool cover -html=c.out -o cover.html
 
 vet:
 	@go vet ${PKG_LIST}
@@ -34,6 +34,6 @@ static: vet lint
 		${PKG}
 
 clean:
-	rm -f ${OUT} ${OUT}-v* c.out
+	rm -f ${OUT} ${OUT}-v* c.out cover.html
 
 .PHONY: build test coverhtml vet lint static clean
