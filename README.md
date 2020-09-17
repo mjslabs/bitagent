@@ -35,7 +35,7 @@ cumbersome.
 Each bitagent process is capable of storing only one secret. This keeps the code
 simple, which helps keep it performant and reduces the chance of errors.
 
-Installation & usage
+Installation
 ---
 
 To install bitagent, use the standard `go install` process.
@@ -46,10 +46,18 @@ git clone https://github.com/mjslabs/bitagent.git && cd bitagent
 go install
 ```
 
+Usage
+---
+
 The easiest way to work with bitagent is by making a wrapper script for your
 use case. See [examples](examples), which includes such a script for use with
 the Bitwarden CLI. Below are the instructions for working with bitagent
-manually, or when creating your own wrapper script.
+manually, or when creating your own wrapper script. If you're only interested in
+the Bitwarden use case, see the comments at the top of the
+[bw](examples/bw) example file.
+
+If you're interested in running bitagent manually, or creating your own wrapper,
+read on.
 
 First, launch bitagent using your system's preferred method of backgrounding a
 process, e.g.
@@ -74,6 +82,18 @@ To retrieve the secret, use `G`.
 echo "G" | nc -U ~/.bitagent.sock -N
 ```
 
+Full example showing the storage of the string `mysecret`, then retrieving it.
+
+```shell
+$ echo Pmysecret | nc -U ~/.bitagent.sock -N
+$ echo G | nc -U ~/.bitagent.sock -N
+mysecret
+```
+
+Your wrapper script should understand the output of the command you're proxying,
+parsing the output for whatever token you're looking to store, then use `nc` or
+something similar to store and retrieve the secret as needed.
+
 Caveats
 ---
 
@@ -83,7 +103,7 @@ out or included in core dumps. This has not been fully vetted by the authors of
 bitagent.  
 
 bitagent defaults to storing up to a 256 byte secret. This is tunable at the
-top of [main.go](main.go). This should be made to be dynamic.
+top of [bitagent.go](cmd/bitagent.go). This should be made dynamic.
 
 The only thing stopping someone from accessing your secret in bitagent is the
 permissions on the socket file. These default to a sane value, but there are
