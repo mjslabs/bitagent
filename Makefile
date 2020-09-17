@@ -36,4 +36,4 @@ static: vet lint
 clean:
 	rm -f ${OUT} ${OUT}-v* c.out cover.html
 
-.PHONY: build test coverhtml vet lint static clean
+.PHONY: build test cover.html vet lint static clean
