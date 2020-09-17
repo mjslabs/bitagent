@@ -1,4 +1,4 @@
-package server
+package cmd
 
 import (
 	"bufio"
@@ -118,4 +118,9 @@ func clientHandler(c net.Conn, secret *memguard.LockedBuffer) error {
 		}
 	}
 	return nil
+}
+
+func errorAndSafeExit(s string, c int) {
+	log.Println(s)
+	memguard.SafeExit(c)
 }

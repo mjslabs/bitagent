@@ -42,8 +42,8 @@ To install bitagent, use the standard `go install` process.
 [Go 1.11+](https://golang.org/) is required due to the use of Go modules.
 
 ```bash
-git clone git@github.com:mjslabs/bitagent && cd bitagent
-go install github.com/mjslabs/bitagent/cmd/bitagent
+git clone https://github.com/mjslabs/bitagent.git && cd bitagent
+go install
 ```
 
 The easiest way to work with bitagent is by making a wrapper script for your

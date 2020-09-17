@@ -5,6 +5,7 @@ env:
 
 go:
   - 1.12.x
+  - 1.15.x
 
 install:
   - GO111MODULE=off go get -v github.com/codeclimate/test-reporter
