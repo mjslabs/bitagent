@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-# Proxy commands for the bitwarden CLI, intercepting them to get or set a
-# session token for seamless use between shells and other programs.
+# This script will proxy commands for the bitwarden CLI, intercepting them to
+# get or set a # session token for seamless use between shells and other programs.
 # Make sure this script is in your $PATH, so you can simply run 'bw' like you
 # normally would.
 
@@ -9,22 +9,28 @@
 # able to use this as an install method:
 # curl https://raw.githubusercontent.com/mjslabs/bitagent/master/examples/bw > $HOME/bin/bw && chmod 0755 $HOME/bin/bw
 
-# Installation of the bitwarden CLI
+# You will want to make sure that $bwcmd below is the full path to the real
+# bitwarden cli. The default is 'bwcli' stored in ~/bin
+
+# Installation of the real bitwarden CLI
 bwcmd="${HOME}/bin/bwcli"
 # Default socket location
 basock="${HOME}/.bitagent.sock"
-# This assumes you've run a `go install`
+# This assumes you've run a `go install` to install bitagent
 bitagent="${GOBIN:-${HOME}/go/bin}/bitagent $basock"
 
+# If our socket doesn't exist then run bitagent
 if [[ ! -e $basock ]]; then
   $bitagent 1>/dev/null & disown
 fi
 
+# If runninig 'bw unlock' or 'bw login', expect the session key to be output on success
 if [[ $1 == "unlock" || $1 == "login" ]]; then
   unlockOut=$($bwcmd $1)
   <<< $unlockOut grep -q BW_SESSION
   if [[ $? == "0" ]]; then
     echo "$1 successful"
+    # Store the key in bitagent
     echo "P"$(<<< $unlockOut tr -d '\n' | sed -e 's/^.*BW_SESSION="\(.*\)".*$/\1/') | nc -U $basock -N
   else
     echo "$1 failed"
@@ -32,6 +38,8 @@ if [[ $1 == "unlock" || $1 == "login" ]]; then
   fi
   exit
 else
+  # We're running some bitwarden command that isn't login or unlock,
+  # so set BW_SESSION using the secret in bitagent, then run the bw cli
   export BW_SESSION="$(echo G | nc -U $basock -N)"
   if [[ $BW_SESSION == "" ]]; then
     # Avoids "Session key is invalid." being sent to the terminal
