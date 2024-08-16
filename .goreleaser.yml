@@ -1,0 +1,51 @@
+env:
+  - GO111MODULE=on
+  - CGO_ENABLED=0
+
+before:
+  hooks:
+    - go mod tidy
+
+builds:
+  -
+    main: ./cmd/hello/
+
+    binary: hello
+
+    goos:
+      - linux
+      - windows
+      - darwin
+      # - freebsd
+
+    goarch:
+      - amd64
+      # - 386
+      # - arm
+      # - arm64
+
+    ldflags:
+      - -s -w
+      - -X main.Name={{.ProjectName}}
+      - -X main.Version={{.Version}}
+
+archives:
+  -
+    name_template: '{{.ProjectName}}_{{.Os}}_{{.Arch}}'
+    replacements:
+      386: i386
+      amd64: x86_64
+
+    format_overrides:
+      - goos: windows
+        format: zip
+
+    files:
+      - README.md
+      - LICENSE
+
+checksum:
+  name_template: 'checksums.txt'
+
+release:
+  draft: true
