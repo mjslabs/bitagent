@@ -1,4 +1,3 @@
-
 # Created by https://www.gitignore.io/api/go,linux,macos,visualstudiocode
 # Edit at https://www.gitignore.io/?templates=go,linux,macos,visualstudiocode
 
@@ -69,5 +68,8 @@ Temporary Items
 ### VisualStudioCode Patch ###
 # Ignore all local history of files
 .history
+
+### Environment
+.env
 
 # End of https://www.gitignore.io/api/go,linux,macos,visualstudiocode
